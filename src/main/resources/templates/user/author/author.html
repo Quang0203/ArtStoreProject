@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{/user/layout/_form :: dynamic(
+                ~{::main},
+                ~{::#aside},
+                ~{::#material},
+                ~{::#breadcums}
+                )}">
+<head>
+    <meta charset="UTF-8">
+    <title>Danh Sách Tác giả</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.1/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap4.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
+    <script src="/assets/admin/global/vendor/datatables.net/jquery.dataTables599c.js?v4.0.2"></script>
+    <script src="https://cdn.datatables.net/1.11.1/js/dataTables.bootstrap4.min.js"></script>
+    <script src="/assets/admin/angular/angular-datatables.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.9/js/responsive.bootstrap4.min.js"></script>
+</head>
+<body>
+<th:block id="breadcums">
+    <ul class="breadcrumb">
+        <li><a th:href="@{/index}">Trang chủ</a></li>
+        <li><a th:href="@{/author}">Tác giả</a></li>
+        <li class="breadcrumb-item active">Danh sách</li>
+    </ul>
+</th:block>
+<th:block id="aside">
+    <div th:replace="/user/home/bestseller.html"></div>
+    <div class="swiper-viewport">
+        <div id="banner0" class="swiper-container">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <a href="#"><img src="/assets/user/image/cache/catalog/banners/banner-dung1.jpg" alt="Left Banner" class="img-responsive" /></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+<main>
+    <div id="category-blogs" class="container">
+        <div id="content" class="col-sm-9">
+            <h2 class="page_title">Danh Sách Tác giả</h2>
+            <div class="page">
+                <div class="page-content">
+                    <div class="panel">
+                        <div class="panel-body">
+                            <table class="table table-hover dataTable table-striped w-full dt-responsive nowrap">
+                                <thead>
+                                <tr>
+                                    <th>Tên</th>
+                                    <th>Avatar</th>
+                                    <th>Chữ ký</th>
+                                    <th>Mô tả</th>
+                                </tr>
+                                </thead>
+<!--                                <tfoot>-->
+<!--                                <tr>-->
+<!--                                    <th>Tên</th>-->
+<!--                                    <th>Avatar</th>-->
+<!--                                    <th>Chữ ký</th>-->
+<!--                                    <th>Chi tiết</th>-->
+<!--                                </tr>-->
+<!--                                </tfoot>-->
+                                <tbody>
+                                <tr th:each="author : ${authors}">
+                                    <td th:text="${author.name}"></td>
+                                    <td><img th:src="@{/assets/images/logo/{logo}(logo=${author.logo})}" alt="" class="img-responsive" /></td>
+                                    <td><img th:src="@{/assets/images/banner/{banner}(banner=${author.banner})}" alt="" class="img-responsive" /></td>
+                                    <td th:text="${author.description}"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade modal-warning" id="modal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            <h4 class="modal-title">Thông Báo!</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>Bạn có chắc muốn xóa danh mục này hay không?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                            <button type="button" ng-click="delete()" id="checkClick" class="btn btn-primary" data-dismiss="modal">Xác nhận</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" ng-class="{true:'modal-info', false:'modal-danger'}[info.status]" id="modalInfo">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            <h4 class="modal-title">{{info.alert}}</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>{{info.content}}</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn" ng-class="{true:'btn-info', false:'btn-danger'}[info.status]" data-dismiss="modal">Xác nhận</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<th:block id="material">
+    <script>
+        $(document).ready(function() {
+            var headerfixed = 0;
+            if (headerfixed == 1) {
+                $(window).scroll(function() {
+                    if ($(window).width() > 991) {
+                        if ($(this).scrollTop() > 150) {
+                            $(".header-bottom").addClass("header-fixed");
+                        } else {
+                            $(".header-bottom").removeClass("header-fixed");
+                        }
+                    } else {
+                        $(".header-bottom").removeClass("header-fixed");
+                    }
+                });
+            } else {
+                $(".header-bottom").removeClass("header-fixed");
+            }
+        });
+    </script>
+    <script src="/assets/user/javascript/list-product.js"></script>
+</th:block>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{/user/layout/_form :: dynamic(
+				~{::main},
+				~{::#aside},
+				~{::#material},
+				~{::#breadcums}
+				)}">
+<head>
+<meta charset="UTF-8">
+<title>Index</title>
+</head>
+<body>
+	<th:block id="breadcums">
+		<ul class="breadcrumb">
+			<li><a th:href="@{/index}">Trang chủ</a></li>
+			<li><a th:href="@{|/danh-sach/${inforProduct.category.Namesearch}|}">[[${inforProduct.category.name}]]</a></li>
+			<li><a th:href="@{|/san-pham/${inforProduct.Namesearch}|}">[[${inforProduct.name}]]</a></li>
+		</ul>		
+	</th:block>
+	<th:block id="aside">
+		<div th:replace="/user/home/bestseller.html"></div>
+		<div class="swiper-viewport">
+			<div id="banner0" class="swiper-container">
+				<div class="swiper-wrapper">
+					<div class="swiper-slide">
+						<a href="#"><img
+							src="/assets/user/image/cache/catalog/banners/banner-dung1.jpg"
+							alt="Left Banner" class="img-responsive" /></a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</th:block>
+
+	<main>
+		<div th:replace="/user/detail/product_infor.html"></div>
+	</main>
+
+</body>
+<th:block id="material">
+	<script src="/assets/user/javascript/detail-product.js"></script>
+	<script src="/assets/user/angular/favorite-app.js"></script>
+	<script>
+		function checkAndSubmit() {
+            var quantity = parseInt(document.getElementById('productQuantity').value);
+            if (quantity > 0) {
+                // Nếu còn hàng, submit form
+                document.querySelector('form').submit();
+            } else {
+                // Nếu hết hàng, hiển thị thông báo
+                alert('Sản phẩm đã hết hàng!');
+            }
+        }
+<!--		function checkAndSubmit() {-->
+<!--			var availableQuantity = parseInt(document.getElementById('productQuantity').value);-->
+<!--			var cartQuantity = parseInt(document.getElementById('cartQuantity').value);-->
+
+<!--			if (availableQuantity > 0) {-->
+<!--				if (cartQuantity < availableQuantity) {-->
+<!--					// Nếu còn hàng và số lượng trong giỏ chưa vượt quá số lượng có sẵn, submit form-->
+<!--					document.querySelector('form').submit();-->
+<!--				} else {-->
+<!--					// Nếu số lượng trong giỏ đã bằng hoặc vượt quá số lượng có sẵn-->
+<!--					alert('Bạn đã thêm tối đa số lượng sản phẩm có sẵn vào giỏ hàng!');-->
+<!--				}-->
+<!--			} else {-->
+<!--				// Nếu hết hàng, hiển thị thông báo-->
+<!--				alert('Sản phẩm đã hết hàng!');-->
+<!--			}-->
+<!--		}-->
+	</script>
+</th:block>
+</html>
